@@ -30,14 +30,11 @@ export const usersWithFilter = createSelector(
     // search
     if (search.length) {
       const searchText = search.toLocaleLowerCase();
-      userList = userList.filter((user) => {
-        if (
+      userList = userList.filter(
+        (user) =>
           user.first_name.toLowerCase().includes(searchText) ||
           user.last_name.toLowerCase().includes(searchText)
-        ) {
-          return user;
-        }
-      });
+      );
     }
 
     return userList;
