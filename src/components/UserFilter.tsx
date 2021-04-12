@@ -8,8 +8,11 @@ import {
   FormControlLabel,
   Checkbox,
   FormGroup,
+  InputAdornment,
+  IconButton,
 } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import CloseIcon from "@material-ui/icons/Close";
 
 import { IFilter } from "../store/ducks/users.duck";
 
@@ -41,11 +44,32 @@ const UserFilter: React.FC<{
       <FormControl variant="outlined" className={classes.formControl}>
         <TextField
           disabled={!isReadyUsers}
-          id="outlined-basic"
+          id="query"
           label="Введите имя"
           variant="outlined"
           value={filter.search}
           onChange={(event) => onChange(event.target.value as string, "search")}
+          onKeyDown={(event) => {
+            if (event.code === "Escape" || event.keyCode === 27) {
+              onChange("", "search");
+            }
+          }}
+          InputProps={{
+            endAdornment: (
+              <>
+                {isReadyUsers && filter.search !== "" && (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="clear search"
+                      onClick={() => onChange("", "search")}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )}
+              </>
+            ),
+          }}
         />
       </FormControl>
       <FormControl variant="outlined" className={classes.formControl}>
